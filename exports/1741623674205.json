@@ -1,0 +1,15 @@
+{
+  "timestamp": 1741623674205,
+  "operation": {
+    "id": "backend:server:main"
+  },
+  "projectId": "construction-materials-supplies-markets",
+  "files": [
+    {
+      "path": "../../apps/construction-materials-supplies-markets/backend/server.js",
+      "type": "text",
+      "size": 141278,
+      "dependencies": false
+    }
+  ]
+}

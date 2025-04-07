@@ -1,0 +1,21 @@
+{
+  "timestamp": 1741623675633,
+  "operation": {
+    "id": "settings:config:package"
+  },
+  "projectId": "construction-materials-supplies-markets",
+  "files": [
+    {
+      "path": "../../apps/construction-materials-supplies-markets/backend/package.json",
+      "type": "text",
+      "size": 785,
+      "dependencies": true
+    },
+    {
+      "path": "../../apps/construction-materials-supplies-markets/backend/.env",
+      "type": "text",
+      "size": 175,
+      "dependencies": false
+    }
+  ]
+}

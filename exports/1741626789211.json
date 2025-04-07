@@ -1,0 +1,37 @@
+{
+  "timestamp": 1741626789211,
+  "operation": {
+    "id": "webapp:react:views",
+    "refs": {
+      "id": "GV_NotificationSystem",
+      "version": "latest"
+    }
+  },
+  "projectId": "construction-materials-supplies-markets",
+  "files": [
+    {
+      "path": "../../apps/construction-materials-supplies-markets/vitereact/src/components/views/GV_NotificationSystem.tsx",
+      "type": "text",
+      "size": 244,
+      "dependencies": false
+    },
+    {
+      "path": "../../apps/construction-materials-supplies-markets/vitereact/src/_cofounder/generated/views/GV_NotificationSystem/empty.tsx",
+      "type": "text",
+      "size": 421,
+      "dependencies": false
+    },
+    {
+      "path": "../../apps/construction-materials-supplies-markets/vitereact/src/_cofounder/generated/views/GV_NotificationSystem/latest.tsx",
+      "type": "text",
+      "size": 16754,
+      "dependencies": false
+    },
+    {
+      "path": "../../apps/construction-materials-supplies-markets/vitereact/src/_cofounder/generated/views/GV_NotificationSystem/meta.json",
+      "type": "text",
+      "size": 53,
+      "dependencies": false
+    }
+  ]
+}

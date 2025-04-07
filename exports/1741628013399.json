@@ -1,0 +1,15 @@
+{
+  "timestamp": 1741628013399,
+  "operation": {
+    "id": "settings:preferences:versions"
+  },
+  "projectId": "construction-materials-supplies-markets",
+  "files": [
+    {
+      "path": "../../apps/construction-materials-supplies-markets/vitereact/src/_cofounder/generated/views/UV_HelpCenter/meta.json",
+      "type": "text",
+      "size": 90,
+      "dependencies": false
+    }
+  ]
+}

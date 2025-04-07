@@ -1,0 +1,19 @@
+{
+  "timestamp": 1741624351103,
+  "operation": {
+    "id": "webapp:react:store",
+    "refs": {
+      "id": "redux",
+      "version": "1741624222302"
+    }
+  },
+  "projectId": "construction-materials-supplies-markets",
+  "files": [
+    {
+      "path": "../../apps/construction-materials-supplies-markets/vitereact/src/store/main.tsx",
+      "type": "text",
+      "size": 26330,
+      "dependencies": false
+    }
+  ]
+}

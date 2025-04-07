@@ -1,0 +1,15 @@
+{
+  "timestamp": 1741623176050,
+  "operation": {
+    "id": "backend:specifications:openapi"
+  },
+  "projectId": "construction-materials-supplies-markets",
+  "files": [
+    {
+      "path": "../../apps/construction-materials-supplies-markets/backend/openapi.yaml",
+      "type": "text",
+      "size": 3,
+      "dependencies": false
+    }
+  ]
+}

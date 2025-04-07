@@ -1,0 +1,15 @@
+{
+  "timestamp": 1741624775139,
+  "operation": {
+    "id": "settings:config:package"
+  },
+  "projectId": "construction-materials-supplies-markets",
+  "files": [
+    {
+      "path": "../../apps/construction-materials-supplies-markets/vitereact/package.json",
+      "type": "text",
+      "size": 2943,
+      "dependencies": true
+    }
+  ]
+}

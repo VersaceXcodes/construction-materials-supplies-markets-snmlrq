@@ -1,0 +1,15 @@
+{
+  "timestamp": 1741622834113,
+  "operation": {
+    "id": "db:postgres"
+  },
+  "projectId": "construction-materials-supplies-markets",
+  "files": [
+    {
+      "path": "../../apps/construction-materials-supplies-markets/backend/db.sql",
+      "type": "text",
+      "size": 73842,
+      "dependencies": false
+    }
+  ]
+}

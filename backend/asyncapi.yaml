@@ -1,0 +1,1166 @@
+asyncapi: 2.0.0
+info:
+  title: ConstructMart Real-time API
+  version: 1.0.0
+  description: AsyncAPI specification for the real-time features of ConstructMart,
+    a modern construction materials & supplies marketplace
+servers:
+  production:
+    url: ws://localhost:1337/ws
+    protocol: ws
+    description: WebSocket server for real-time communication
+channels:
+  /notifications/{user_uid}:
+    parameters:
+      user_uid:
+        description: The unique identifier of the user
+        schema:
+          type: string
+    subscribe:
+      summary: Receive notifications for a specific user
+      operationId: receive_user_notifications
+      message:
+        $ref: "#/components/messages/notification"
+  /orders/{order_uid}/status:
+    parameters:
+      order_uid:
+        description: The unique identifier of the order
+        schema:
+          type: string
+    subscribe:
+      summary: Receive real-time order status updates
+      operationId: receive_order_status_updates
+      message:
+        $ref: "#/components/messages/order_status_update"
+  /messages/thread/{thread_uid}:
+    parameters:
+      thread_uid:
+        description: The unique identifier of the message thread
+        schema:
+          type: string
+    subscribe:
+      summary: Receive messages in a specific thread
+      operationId: receive_thread_messages
+      message:
+        $ref: "#/components/messages/message"
+    publish:
+      summary: Send a message to a specific thread
+      operationId: send_thread_message
+      message:
+        $ref: "#/components/messages/message_input"
+  /products/{product_uid}/inventory:
+    parameters:
+      product_uid:
+        description: The unique identifier of the product
+        schema:
+          type: string
+    subscribe:
+      summary: Receive inventory updates for a specific product
+      operationId: receive_product_inventory_updates
+      message:
+        $ref: "#/components/messages/inventory_update"
+  /products/{product_uid}/price:
+    parameters:
+      product_uid:
+        description: The unique identifier of the product
+        schema:
+          type: string
+    subscribe:
+      summary: Receive price updates for a specific product
+      operationId: receive_product_price_updates
+      message:
+        $ref: "#/components/messages/price_update"
+  /carts/{cart_uid}:
+    parameters:
+      cart_uid:
+        description: The unique identifier of the cart
+        schema:
+          type: string
+    subscribe:
+      summary: Receive updates for a specific shopping cart
+      operationId: receive_cart_updates
+      message:
+        $ref: "#/components/messages/cart_update"
+  /wishlists/{wishlist_uid}:
+    parameters:
+      wishlist_uid:
+        description: The unique identifier of the wishlist
+        schema:
+          type: string
+    subscribe:
+      summary: Receive updates for a specific wishlist
+      operationId: receive_wishlist_updates
+      message:
+        $ref: "#/components/messages/wishlist_update"
+  /quotes/{quote_uid}:
+    parameters:
+      quote_uid:
+        description: The unique identifier of the quote request
+        schema:
+          type: string
+    subscribe:
+      summary: Receive updates for a specific quote request
+      operationId: receive_quote_updates
+      message:
+        $ref: "#/components/messages/quote_update"
+    publish:
+      summary: Update a quote request (seller only)
+      operationId: update_quote
+      message:
+        $ref: "#/components/messages/quote_response"
+  /products/{product_uid}/questions:
+    parameters:
+      product_uid:
+        description: The unique identifier of the product
+        schema:
+          type: string
+    subscribe:
+      summary: Receive new questions or answers for a specific product
+      operationId: receive_product_qa_updates
+      message:
+        $ref: "#/components/messages/qa_update"
+    publish:
+      summary: Submit a new question or answer for a product
+      operationId: submit_product_qa
+      message:
+        $ref: "#/components/messages/qa_input"
+  /products/{product_uid}/reviews:
+    parameters:
+      product_uid:
+        description: The unique identifier of the product
+        schema:
+          type: string
+    subscribe:
+      summary: Receive new reviews for a specific product
+      operationId: receive_product_review_updates
+      message:
+        $ref: "#/components/messages/review_update"
+  /support_tickets/{ticket_uid}:
+    parameters:
+      ticket_uid:
+        description: The unique identifier of the support ticket
+        schema:
+          type: string
+    subscribe:
+      summary: Receive updates for a specific support ticket
+      operationId: receive_ticket_updates
+      message:
+        $ref: "#/components/messages/ticket_update"
+    publish:
+      summary: Submit a response to a support ticket
+      operationId: submit_ticket_response
+      message:
+        $ref: "#/components/messages/ticket_response_input"
+  /sellers/{company_uid}/orders:
+    parameters:
+      company_uid:
+        description: The unique identifier of the seller company
+        schema:
+          type: string
+    subscribe:
+      summary: Receive new order notifications for a seller
+      operationId: receive_seller_order_notifications
+      message:
+        $ref: "#/components/messages/seller_order_notification"
+  /sellers/{company_uid}/inventory_alerts:
+    parameters:
+      company_uid:
+        description: The unique identifier of the seller company
+        schema:
+          type: string
+    subscribe:
+      summary: Receive inventory alerts for a seller
+      operationId: receive_seller_inventory_alerts
+      message:
+        $ref: "#/components/messages/inventory_alert"
+  /orders/{order_uid}/delivery:
+    parameters:
+      order_uid:
+        description: The unique identifier of the order
+        schema:
+          type: string
+    subscribe:
+      summary: Receive real-time delivery tracking updates for an order
+      operationId: receive_delivery_updates
+      message:
+        $ref: "#/components/messages/delivery_update"
+components:
+  messages:
+    notification:
+      name: notification
+      title: User Notification
+      summary: A notification for a user
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/notification"
+    order_status_update:
+      name: order_status_update
+      title: Order Status Update
+      summary: An update to an order's status
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/order_status_update"
+    message:
+      name: message
+      title: Message
+      summary: A message in a conversation thread
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/message"
+    message_input:
+      name: message_input
+      title: Message Input
+      summary: Input for sending a new message
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/message_input"
+    inventory_update:
+      name: inventory_update
+      title: Inventory Update
+      summary: An update to a product's inventory
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/inventory_update"
+    price_update:
+      name: price_update
+      title: Price Update
+      summary: An update to a product's price
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/price_update"
+    cart_update:
+      name: cart_update
+      title: Cart Update
+      summary: An update to a shopping cart
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/cart_update"
+    wishlist_update:
+      name: wishlist_update
+      title: Wishlist Update
+      summary: An update to a wishlist
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/wishlist_update"
+    quote_update:
+      name: quote_update
+      title: Quote Update
+      summary: An update to a quote request
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/quote_update"
+    quote_response:
+      name: quote_response
+      title: Quote Response
+      summary: A response to a quote request
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/quote_response"
+    qa_update:
+      name: qa_update
+      title: Question/Answer Update
+      summary: A new question or answer for a product
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/qa_update"
+    qa_input:
+      name: qa_input
+      title: Question/Answer Input
+      summary: Input for submitting a new question or answer
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/qa_input"
+    review_update:
+      name: review_update
+      title: Review Update
+      summary: A new review for a product
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/review_update"
+    ticket_update:
+      name: ticket_update
+      title: Support Ticket Update
+      summary: An update to a support ticket
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/ticket_update"
+    ticket_response_input:
+      name: ticket_response_input
+      title: Ticket Response Input
+      summary: Input for submitting a response to a support ticket
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/ticket_response_input"
+    seller_order_notification:
+      name: seller_order_notification
+      title: Seller Order Notification
+      summary: A notification for a new order for a seller
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/seller_order_notification"
+    inventory_alert:
+      name: inventory_alert
+      title: Inventory Alert
+      summary: An alert for low inventory levels
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/inventory_alert"
+    delivery_update:
+      name: delivery_update
+      title: Delivery Update
+      summary: An update to an order's delivery status
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/delivery_update"
+  schemas:
+    notification:
+      type: object
+      required:
+        - notification_uid
+        - user_uid
+        - notification_type
+        - title
+        - message
+        - created_at
+      properties:
+        notification_uid:
+          type: string
+          description: Unique identifier for the notification
+        user_uid:
+          type: string
+          description: Unique identifier of the user receiving the notification
+        notification_type:
+          type: string
+          description: Type of notification (order, message, inventory, etc.)
+          enum:
+            - order_status
+            - new_message
+            - price_change
+            - back_in_stock
+            - quote_response
+            - new_review
+            - order_shipped
+            - payment_processed
+            - return_approved
+            - new_question
+        title:
+          type: string
+          description: Short title of the notification
+        message:
+          type: string
+          description: Detailed message of the notification
+        related_to:
+          type: object
+          description: Object containing related entity identifiers
+          properties:
+            entity_type:
+              type: string
+              description: Type of related entity (order, product, message, etc.)
+            entity_uid:
+              type: string
+              description: Unique identifier of the related entity
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the notification was created
+        is_read:
+          type: boolean
+          description: Whether the notification has been read
+          default: false
+    order_status_update:
+      type: object
+      required:
+        - order_uid
+        - previous_status
+        - new_status
+        - updated_at
+      properties:
+        order_uid:
+          type: string
+          description: Unique identifier of the order
+        order_number:
+          type: string
+          description: Human-readable order number
+        previous_status:
+          type: string
+          description: Previous status of the order
+          enum:
+            - pending
+            - processing
+            - shipped
+            - delivered
+            - cancelled
+            - returned
+        new_status:
+          type: string
+          description: New status of the order
+          enum:
+            - pending
+            - processing
+            - shipped
+            - delivered
+            - cancelled
+            - returned
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the status was updated
+        updated_by:
+          type: string
+          description: User who updated the status
+        note:
+          type: string
+          description: Optional note about the status change
+    message:
+      type: object
+      required:
+        - message_uid
+        - thread_uid
+        - sender_uid
+        - recipient_uid
+        - message_content
+        - created_at
+      properties:
+        message_uid:
+          type: string
+          description: Unique identifier of the message
+        thread_uid:
+          type: string
+          description: Unique identifier of the message thread
+        sender_uid:
+          type: string
+          description: Unique identifier of the message sender
+        sender_name:
+          type: string
+          description: Name of the message sender
+        sender_type:
+          type: string
+          description: Type of the sender (buyer, seller, support)
+        recipient_uid:
+          type: string
+          description: Unique identifier of the message recipient
+        subject:
+          type: string
+          description: Subject of the message
+        message_content:
+          type: string
+          description: Content of the message
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the message was created
+        is_read:
+          type: boolean
+          description: Whether the message has been read
+          default: false
+        related_to_order_uid:
+          type: string
+          description: Related order if applicable
+        related_to_product_uid:
+          type: string
+          description: Related product if applicable
+        has_attachments:
+          type: boolean
+          description: Whether the message has attachments
+          default: false
+        attachments:
+          type: array
+          description: List of attachments if any
+          items:
+            type: object
+            properties:
+              file_url:
+                type: string
+              file_name:
+                type: string
+              file_type:
+                type: string
+              file_size:
+                type: number
+    message_input:
+      type: object
+      required:
+        - thread_uid
+        - recipient_uid
+        - message_content
+      properties:
+        thread_uid:
+          type: string
+          description: Unique identifier of the message thread
+        recipient_uid:
+          type: string
+          description: Unique identifier of the message recipient
+        message_content:
+          type: string
+          description: Content of the message
+        subject:
+          type: string
+          description: Subject of the message (for new threads)
+        related_to_order_uid:
+          type: string
+          description: Related order if applicable
+        related_to_product_uid:
+          type: string
+          description: Related product if applicable
+        attachments:
+          type: array
+          description: List of attachments if any
+          items:
+            type: object
+            required:
+              - file_url
+              - file_name
+              - file_type
+            properties:
+              file_url:
+                type: string
+              file_name:
+                type: string
+              file_type:
+                type: string
+              file_size:
+                type: number
+    inventory_update:
+      type: object
+      required:
+        - product_uid
+        - previous_quantity
+        - new_quantity
+        - updated_at
+      properties:
+        product_uid:
+          type: string
+          description: Unique identifier of the product
+        product_name:
+          type: string
+          description: Name of the product
+        variant_uid:
+          type: string
+          description: Unique identifier of the product variant if applicable
+        variant_info:
+          type: string
+          description: Description of the variant if applicable
+        previous_quantity:
+          type: number
+          description: Previous inventory quantity
+        new_quantity:
+          type: number
+          description: New inventory quantity
+        in_stock:
+          type: boolean
+          description: Whether the product is now in stock
+        back_in_stock:
+          type: boolean
+          description: Whether the product was out of stock and is now back in stock
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the inventory was updated
+    price_update:
+      type: object
+      required:
+        - product_uid
+        - previous_price
+        - new_price
+        - updated_at
+      properties:
+        product_uid:
+          type: string
+          description: Unique identifier of the product
+        product_name:
+          type: string
+          description: Name of the product
+        variant_uid:
+          type: string
+          description: Unique identifier of the product variant if applicable
+        variant_info:
+          type: string
+          description: Description of the variant if applicable
+        previous_price:
+          type: number
+          description: Previous price
+        new_price:
+          type: number
+          description: New price
+        currency:
+          type: string
+          description: Currency of the price
+          default: USD
+        price_change_percentage:
+          type: number
+          description: Percentage change in price
+        is_sale:
+          type: boolean
+          description: Whether this is a sale price
+        sale_ends_at:
+          type: string
+          format: date-time
+          description: When the sale ends if applicable
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the price was updated
+    cart_update:
+      type: object
+      required:
+        - cart_uid
+        - update_type
+        - updated_at
+      properties:
+        cart_uid:
+          type: string
+          description: Unique identifier of the cart
+        update_type:
+          type: string
+          description: Type of update to the cart
+          enum:
+            - item_added
+            - item_removed
+            - quantity_changed
+            - item_unavailable
+            - price_changed
+            - cart_cleared
+            - moved_to_saved
+            - discount_applied
+            - discount_removed
+        item_uid:
+          type: string
+          description: Unique identifier of the cart item if applicable
+        product_uid:
+          type: string
+          description: Unique identifier of the product if applicable
+        product_name:
+          type: string
+          description: Name of the product if applicable
+        variant_uid:
+          type: string
+          description: Unique identifier of the variant if applicable
+        previous_quantity:
+          type: number
+          description: Previous quantity if applicable
+        new_quantity:
+          type: number
+          description: New quantity if applicable
+        previous_price:
+          type: number
+          description: Previous price if applicable
+        new_price:
+          type: number
+          description: New price if applicable
+        cart_total:
+          type: number
+          description: New cart total
+        item_count:
+          type: number
+          description: New item count in cart
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the cart was updated
+    wishlist_update:
+      type: object
+      required:
+        - wishlist_uid
+        - update_type
+        - updated_at
+      properties:
+        wishlist_uid:
+          type: string
+          description: Unique identifier of the wishlist
+        wishlist_name:
+          type: string
+          description: Name of the wishlist
+        update_type:
+          type: string
+          description: Type of update to the wishlist
+          enum:
+            - item_added
+            - item_removed
+            - back_in_stock
+            - price_changed
+            - item_unavailable
+        item_uid:
+          type: string
+          description: Unique identifier of the wishlist item if applicable
+        product_uid:
+          type: string
+          description: Unique identifier of the product if applicable
+        product_name:
+          type: string
+          description: Name of the product if applicable
+        variant_uid:
+          type: string
+          description: Unique identifier of the variant if applicable
+        previous_price:
+          type: number
+          description: Previous price if applicable
+        new_price:
+          type: number
+          description: New price if applicable
+        in_stock:
+          type: boolean
+          description: Whether the product is in stock
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the wishlist was updated
+    quote_update:
+      type: object
+      required:
+        - quote_uid
+        - update_type
+        - updated_at
+      properties:
+        quote_uid:
+          type: string
+          description: Unique identifier of the quote request
+        request_number:
+          type: string
+          description: Request number of the quote
+        update_type:
+          type: string
+          description: Type of update to the quote
+          enum:
+            - status_changed
+            - seller_responded
+            - quote_expired
+            - quote_accepted
+            - quote_rejected
+            - item_added
+            - item_removed
+            - item_updated
+        previous_status:
+          type: string
+          description: Previous status if applicable
+        new_status:
+          type: string
+          description: New status if applicable
+        seller_uid:
+          type: string
+          description: Unique identifier of the seller if applicable
+        seller_name:
+          type: string
+          description: Name of the seller if applicable
+        total_quoted_price:
+          type: number
+          description: Total quoted price if applicable
+        expiration_date:
+          type: string
+          format: date-time
+          description: Expiration date of the quote if applicable
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when the quote was updated
+        notes:
+          type: string
+          description: Additional notes about the update
+    quote_response:
+      type: object
+      required:
+        - quote_uid
+        - seller_uid
+        - quoted_items
+      properties:
+        quote_uid:
+          type: string
+          description: Unique identifier of the quote request
+        seller_uid:
+          type: string
+          description: Unique identifier of the seller
+        status:
+          type: string
+          description: New status for the quote
+          enum:
+            - quoted
+            - rejected
+        expiration_date:
+          type: string
+          format: date-time
+          description: When the quote expires
+        notes:
+          type: string
+          description: Notes from the seller
+        quoted_items:
+          type: array
+          description: List of quoted items
+          items:
+            type: object
+            required:
+              - quote_item_uid
+              - quoted_unit_price
+            properties:
+              quote_item_uid:
+                type: string
+                description: Unique identifier of the quote item
+              quoted_unit_price:
+                type: number
+                description: Quoted price per unit
+              notes:
+                type: string
+                description: Item-specific notes
+    qa_update:
+      type: object
+      required:
+        - product_uid
+        - update_type
+        - updated_at
+      properties:
+        product_uid:
+          type: string
+          description: Unique identifier of the product
+        product_name:
+          type: string
+          description: Name of the product
+        update_type:
+          type: string
+          description: Type of update
+          enum:
+            - new_question
+            - new_answer
+            - question_approved
+            - answer_approved
+        question_uid:
+          type: string
+          description: Unique identifier of the question
+        question_text:
+          type: string
+          description: Text of the question if applicable
+        answer_uid:
+          type: string
+          description: Unique identifier of the answer if applicable
+        answer_text:
+          type: string
+          description: Text of the answer if applicable
+        user_uid:
+          type: string
+          description: Unique identifier of the user who asked/answered
+        user_name:
+          type: string
+          description: Name of the user who asked/answered
+        is_seller:
+          type: boolean
+          description: Whether the answerer is the seller
+          default: false
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp of the update
+    qa_input:
+      type: object
+      required:
+        - product_uid
+        - content_type
+      properties:
+        product_uid:
+          type: string
+          description: Unique identifier of the product
+        content_type:
+          type: string
+          description: Type of content being submitted
+          enum:
+            - question
+            - answer
+        question_uid:
+          type: string
+          description: Unique identifier of the question (required for answers)
+        content:
+          type: string
+          description: The question or answer text
+    review_update:
+      type: object
+      required:
+        - product_uid
+        - review_uid
+        - rating
+        - updated_at
+      properties:
+        product_uid:
+          type: string
+          description: Unique identifier of the product
+        product_name:
+          type: string
+          description: Name of the product
+        review_uid:
+          type: string
+          description: Unique identifier of the review
+        user_uid:
+          type: string
+          description: Unique identifier of the reviewer
+        user_name:
+          type: string
+          description: Name of the reviewer
+        rating:
+          type: number
+          description: Rating given (1-5)
+        title:
+          type: string
+          description: Title of the review
+        content:
+          type: string
+          description: Content of the review
+        pros:
+          type: string
+          description: Pros mentioned in the review
+        cons:
+          type: string
+          description: Cons mentioned in the review
+        verified_purchase:
+          type: boolean
+          description: Whether this is from a verified purchase
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp of the review
+        has_images:
+          type: boolean
+          description: Whether the review includes images
+        status:
+          type: string
+          description: Status of the review
+          enum:
+            - pending
+            - approved
+            - rejected
+    ticket_update:
+      type: object
+      required:
+        - ticket_uid
+        - update_type
+        - updated_at
+      properties:
+        ticket_uid:
+          type: string
+          description: Unique identifier of the support ticket
+        ticket_number:
+          type: string
+          description: Ticket number
+        update_type:
+          type: string
+          description: Type of update
+          enum:
+            - status_changed
+            - new_response
+            - assigned
+            - resolved
+        previous_status:
+          type: string
+          description: Previous status if applicable
+        new_status:
+          type: string
+          description: New status if applicable
+        response_uid:
+          type: string
+          description: Unique identifier of the response if applicable
+        response_text:
+          type: string
+          description: Text of the response if applicable
+        responder_uid:
+          type: string
+          description: Unique identifier of the responder
+        responder_name:
+          type: string
+          description: Name of the responder
+        is_staff:
+          type: boolean
+          description: Whether the responder is staff
+        assigned_to_uid:
+          type: string
+          description: Unique identifier of the assignee if applicable
+        assigned_to_name:
+          type: string
+          description: Name of the assignee if applicable
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp of the update
+    ticket_response_input:
+      type: object
+      required:
+        - ticket_uid
+        - response_text
+      properties:
+        ticket_uid:
+          type: string
+          description: Unique identifier of the support ticket
+        response_text:
+          type: string
+          description: Text of the response
+        change_status:
+          type: string
+          description: Optional status change
+          enum:
+            - in_progress
+            - waiting_for_customer
+            - resolved
+            - closed
+        has_attachments:
+          type: boolean
+          description: Whether attachments are included
+          default: false
+        attachments:
+          type: array
+          description: List of attachments if any
+          items:
+            type: object
+            required:
+              - file_url
+              - file_name
+              - file_type
+            properties:
+              file_url:
+                type: string
+              file_name:
+                type: string
+              file_type:
+                type: string
+              file_size:
+                type: number
+    seller_order_notification:
+      type: object
+      required:
+        - company_uid
+        - order_uid
+        - created_at
+      properties:
+        company_uid:
+          type: string
+          description: Unique identifier of the seller company
+        order_uid:
+          type: string
+          description: Unique identifier of the order
+        order_number:
+          type: string
+          description: Human-readable order number
+        buyer_uid:
+          type: string
+          description: Unique identifier of the buyer
+        buyer_name:
+          type: string
+          description: Name of the buyer
+        order_total:
+          type: number
+          description: Total amount of the order
+        currency:
+          type: string
+          description: Currency of the order
+          default: USD
+        item_count:
+          type: number
+          description: Number of items in the order
+        requires_attention:
+          type: boolean
+          description: Whether the order requires immediate attention
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the order was created
+        payment_status:
+          type: string
+          description: Status of the payment
+          enum:
+            - pending
+            - authorized
+            - paid
+            - refunded
+            - partially_refunded
+    inventory_alert:
+      type: object
+      required:
+        - company_uid
+        - alert_type
+        - product_uid
+        - current_quantity
+        - created_at
+      properties:
+        company_uid:
+          type: string
+          description: Unique identifier of the seller company
+        alert_type:
+          type: string
+          description: Type of inventory alert
+          enum:
+            - low_stock
+            - out_of_stock
+            - back_in_stock
+            - high_demand
+        product_uid:
+          type: string
+          description: Unique identifier of the product
+        product_name:
+          type: string
+          description: Name of the product
+        variant_uid:
+          type: string
+          description: Unique identifier of the variant if applicable
+        variant_info:
+          type: string
+          description: Description of the variant if applicable
+        current_quantity:
+          type: number
+          description: Current inventory quantity
+        threshold:
+          type: number
+          description: Threshold that triggered the alert (for low stock)
+        restock_suggestion:
+          type: number
+          description: Suggested quantity to restock
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the alert was created
+    delivery_update:
+      type: object
+      required:
+        - order_uid
+        - update_type
+        - updated_at
+      properties:
+        order_uid:
+          type: string
+          description: Unique identifier of the order
+        order_number:
+          type: string
+          description: Human-readable order number
+        update_type:
+          type: string
+          description: Type of delivery update
+          enum:
+            - preparing
+            - shipped
+            - in_transit
+            - out_for_delivery
+            - delivered
+            - delayed
+            - failed_attempt
+            - exception
+        tracking_number:
+          type: string
+          description: Tracking number if applicable
+        carrier:
+          type: string
+          description: Shipping carrier if applicable
+        location:
+          type: string
+          description: Current location if applicable
+        estimated_delivery:
+          type: string
+          format: date-time
+          description: Estimated delivery date/time
+        delivered_at:
+          type: string
+          format: date-time
+          description: Actual delivery date/time if delivered
+        signature_required:
+          type: boolean
+          description: Whether signature is required
+        signature_name:
+          type: string
+          description: Name of person who signed if delivered
+        notes:
+          type: string
+          description: Additional notes about the delivery
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp of the update

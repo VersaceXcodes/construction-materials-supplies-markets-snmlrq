@@ -1,0 +1,37 @@
+{
+  "timestamp": 1741626750287,
+  "operation": {
+    "id": "webapp:react:views",
+    "refs": {
+      "id": "GV_AuthenticationModal",
+      "version": "latest"
+    }
+  },
+  "projectId": "construction-materials-supplies-markets",
+  "files": [
+    {
+      "path": "../../apps/construction-materials-supplies-markets/vitereact/src/components/views/GV_AuthenticationModal.tsx",
+      "type": "text",
+      "size": 245,
+      "dependencies": false
+    },
+    {
+      "path": "../../apps/construction-materials-supplies-markets/vitereact/src/_cofounder/generated/views/GV_AuthenticationModal/empty.tsx",
+      "type": "text",
+      "size": 424,
+      "dependencies": false
+    },
+    {
+      "path": "../../apps/construction-materials-supplies-markets/vitereact/src/_cofounder/generated/views/GV_AuthenticationModal/latest.tsx",
+      "type": "text",
+      "size": 49682,
+      "dependencies": false
+    },
+    {
+      "path": "../../apps/construction-materials-supplies-markets/vitereact/src/_cofounder/generated/views/GV_AuthenticationModal/meta.json",
+      "type": "text",
+      "size": 53,
+      "dependencies": false
+    }
+  ]
+}

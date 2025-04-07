@@ -1,0 +1,15 @@
+{
+  "timestamp": 1741623011256,
+  "operation": {
+    "id": "backend:specifications:asyncapi"
+  },
+  "projectId": "construction-materials-supplies-markets",
+  "files": [
+    {
+      "path": "../../apps/construction-materials-supplies-markets/backend/asyncapi.yaml",
+      "type": "text",
+      "size": 35378,
+      "dependencies": false
+    }
+  ]
+}

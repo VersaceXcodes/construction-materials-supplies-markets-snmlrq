@@ -1,0 +1,37 @@
+{
+  "timestamp": 1741625890591,
+  "operation": {
+    "id": "webapp:react:views",
+    "refs": {
+      "id": "UV_OrderManagement",
+      "version": "1741624399434"
+    }
+  },
+  "projectId": "construction-materials-supplies-markets",
+  "files": [
+    {
+      "path": "../../apps/construction-materials-supplies-markets/vitereact/src/components/views/UV_OrderManagement.tsx",
+      "type": "text",
+      "size": 241,
+      "dependencies": false
+    },
+    {
+      "path": "../../apps/construction-materials-supplies-markets/vitereact/src/_cofounder/generated/views/UV_OrderManagement/empty.tsx",
+      "type": "text",
+      "size": 412,
+      "dependencies": false
+    },
+    {
+      "path": "../../apps/construction-materials-supplies-markets/vitereact/src/_cofounder/generated/views/UV_OrderManagement/1741624399434.tsx",
+      "type": "text",
+      "size": 87345,
+      "dependencies": false
+    },
+    {
+      "path": "../../apps/construction-materials-supplies-markets/vitereact/src/_cofounder/generated/views/UV_OrderManagement/meta.json",
+      "type": "text",
+      "size": 53,
+      "dependencies": false
+    }
+  ]
+}
