@@ -1,0 +1,42 @@
+name: Deploy to fly.io
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Deploy app
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - name: Check for FLY_API_TOKEN
+        run: |
+          if [ -z "${{ secrets.FLY_API_TOKEN }}" ]; then
+            echo "::error::FLY_API_TOKEN is not set in repository secrets"
+            echo "Please add your Fly.io API token as a repository secret named FLY_API_TOKEN"
+            exit 1
+          fi
+      - name: Create app on fly.io if it doesn't exist
+        run: |
+          # Extract app name from fly.toml
+          APP_NAME=$(grep -m 1 "app = " fly.toml | cut -d '"' -f 2)
+          echo "App name from fly.toml: $APP_NAME"
+
+          # Check if app exists
+          if ! flyctl apps list | grep -q "$APP_NAME"; then
+            echo "Creating app on Fly.io: $APP_NAME"
+            flyctl apps create --name $APP_NAME --org personal
+          else
+            echo "App $APP_NAME already exists on Fly.io"
+          fi
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      - name: Deploy app on fly.io
+        run: flyctl deploy --yes
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      - name: Check deployment status
+        run: flyctl status
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
